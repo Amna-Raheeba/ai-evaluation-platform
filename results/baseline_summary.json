@@ -1,0 +1,50 @@
+{
+  "generated": "2026-11-10",
+  "note": "Real offline runs of the platform core. Research and router agents ran for real (fixture corpus / real routing logic). The RAG agent needs its own environment + Gemini API key, so its run is recorded honestly as infrastructure-unavailable, not scored.",
+  "research_agent": {
+    "baseline_run_id": 1,
+    "rerun_run_id": 2,
+    "dataset_version": "research@0bea3a91",
+    "pass_rate": 1.0,
+    "metric_means": {
+      "citation_format": 1.0,
+      "citation_presence": 1.0,
+      "citation_support": 0.7907,
+      "claim_support_rate": 1.0,
+      "contradiction_surfaced": 1.0,
+      "cost_estimate": 0.001,
+      "latency": 0.0016,
+      "lexical_faithfulness": 0.8422,
+      "lexical_relevance": 1.0,
+      "required_facts": 1.0,
+      "schema_validity": 1.0,
+      "source_diversity": 0.875,
+      "token_usage": 2644.75
+    },
+    "total_cost_usd_estimate": 0.008049,
+    "regression_decision_vs_baseline": "PASS"
+  },
+  "llm_router": {
+    "baseline_run_id": 3,
+    "rerun_run_id": 4,
+    "dataset_version": "router@9b862930",
+    "pass_rate": 1.0,
+    "metric_means": {
+      "citation_format": 1.0,
+      "cost_estimate": 0.0,
+      "expensive_call_rate": 0.1667,
+      "latency": 0.0001,
+      "routing_accuracy": 1.0,
+      "schema_validity": 1.0,
+      "token_usage": 72.3333
+    },
+    "regression_decision_vs_baseline": "PASS"
+  },
+  "rag_agent": {
+    "run_id": 5,
+    "status": "unavailable (infrastructure)",
+    "infra_errors": 10,
+    "scored": 0,
+    "reason": "ragcites pipeline requires google-genai and a Gemini API key; neither is present in the offline environment. Recorded as infra, never as a quality failure."
+  }
+}
