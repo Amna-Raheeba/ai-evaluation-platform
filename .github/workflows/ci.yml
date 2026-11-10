@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install pytest (core is standard-library only)
+        run: pip install pytest
+      - name: Run tests
+        run: pytest -q
+      - name: Quick mock evaluation (offline, no API keys)
+        if: matrix.python-version == '3.12'
+        run: |
+          python scripts/run_evaluation.py --agent mock-agent --profile quick --baseline --db ci.db
+          python scripts/run_evaluation.py --agent mock-agent --profile quick --db ci.db
+      - name: Quality gate against the baseline just saved
+        if: matrix.python-version == '3.12'
+        run: python scripts/check_quality_gate.py --agent mock-agent --db ci.db
